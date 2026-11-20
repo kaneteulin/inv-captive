@@ -1,0 +1,56 @@
+# v로 시작하는 태그(v0.3.0 등)를 푸시하면 플러그인을 빌드해서 GitHub Releases에 올린다.
+name: Release
+
+on:
+  push:
+    tags: [ "v*" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+
+      - name: Prepare Paper server (for NMS classes)
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+          # server.ps1 의 $Version 과 같은 버전으로 빌드
+          $Version = ([regex]::Match((Get-Content server.ps1 -Raw), '(?m)^\$Version\s*=\s*"([^"]+)"')).Groups[1].Value
+          if (!$Version -or $Version -eq "latest") { throw "server.ps1 must pin `$Version (e.g. 26.3) for CI builds" }
+          "MC_VERSION=$Version" | Out-File -Append -Encoding utf8 $env:GITHUB_ENV
+
+          $Headers = @{ "User-Agent" = "inv-captive-ci/1.0" }
+          $Build = Invoke-RestMethod "https://fill.papermc.io/v3/projects/paper/versions/$Version/builds/latest" -Headers $Headers
+          New-Item -ItemType Directory -Force .server | Out-Null
+          Invoke-WebRequest $Build.downloads.'server:default'.url -OutFile .server\paper.jar -UseBasicParsing -Headers $Headers
+
+          Push-Location .server
+          cmd /c "java -Dpaperclip.patchonly=true -jar paper.jar"
+          Pop-Location
+          if (!(Test-Path ".server\versions\$Version")) { throw "paperclip did not produce versions\$Version" }
+
+      - name: Build plugin
+        shell: powershell
+        run: |
+          powershell -NoProfile -ExecutionPolicy Bypass -File inv-captive\build.ps1 -ServerDir .server -McVersion $env:MC_VERSION
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            inv-captive/build/InvCaptive.jar
+            inv-captive/reset.bat

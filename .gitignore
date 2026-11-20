@@ -1,0 +1,7 @@
+# 서버 실행 폴더 (월드, 서버 jar, 로그 등) - 저장소에 올리지 않음
+.server/
+
+# 빌드 결과물 (GitHub Actions가 Releases에 올림)
+inv-captive/build/
+
+*.log
