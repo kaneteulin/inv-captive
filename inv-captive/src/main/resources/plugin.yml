@@ -2,7 +2,7 @@ name: InvCaptive
 main: com.github.monun.invcaptive.plugin.InvCaptivePlugin
 api-version: '26.3'
 version: ${version}
-authors: [ Noonmaru ]
+authors: [ Noonmaru, kaneteulin ]
 
 commands:
   invcaptive:

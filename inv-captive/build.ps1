@@ -8,12 +8,19 @@ Param(
     [string]$ServerDir = (Join-Path $PSScriptRoot "..\.server"),
     [string]$Output = (Join-Path $PSScriptRoot "build\InvCaptive.jar"),
     # Minecraft version to compile against (folder name under versions\). Empty = newest.
-    [string]$McVersion = ""
+    [string]$McVersion = "",
+    # Plugin version written to plugin.yml. Empty = latest git tag (v0.3.2 -> 0.3.2), or "dev".
+    [string]$PluginVersion = ""
 )
 
 $ErrorActionPreference = "Stop"
 
-$Version = "0.2.0"
+if ([string]::IsNullOrEmpty($PluginVersion))
+{
+    $Tag = (cmd /c "git -C `"$PSScriptRoot`" describe --tags --abbrev=0 2>nul")
+    $PluginVersion = if ($Tag) { "$Tag" } else { "dev" }
+}
+$Version = $PluginVersion.Trim() -replace '^v', ''
 $JavaRelease = 25
 
 # Locate the JDK that "java" on PATH belongs to

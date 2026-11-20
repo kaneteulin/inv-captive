@@ -44,7 +44,9 @@ jobs:
       - name: Build plugin
         shell: powershell
         run: |
-          powershell -NoProfile -ExecutionPolicy Bypass -File inv-captive\build.ps1 -ServerDir .server -McVersion $env:MC_VERSION
+          # 태그 이름(v0.3.2)을 플러그인 버전(0.3.2)으로 사용. 태그 없이 수동 실행하면 "dev"
+          $PluginVersion = if ($env:GITHUB_REF_TYPE -eq "tag") { $env:GITHUB_REF_NAME } else { "dev" }
+          powershell -NoProfile -ExecutionPolicy Bypass -File inv-captive\build.ps1 -ServerDir .server -McVersion $env:MC_VERSION -PluginVersion $PluginVersion
           if ($LASTEXITCODE -ne 0) { exit 1 }
 
       - name: Publish release
