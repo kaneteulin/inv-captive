@@ -44,6 +44,19 @@ git tag v0.3.0
 git push origin v0.3.0
 ```
 
+## 저작권 및 출처
+
+이 저장소는 [monun/inv-captive](https://github.com/monun/inv-captive) 0.2.0 (Noonmaru, GPL-3.0) 의 수정본입니다.
+2026-11-20 kaneteulin 이 아래와 같이 수정했습니다. 각 파일 상단에도 출처와 수정 내용이 적혀 있습니다.
+
+| 파일 | 출처 | 수정 내용 |
+|---|---|---|
+| `inv-captive/src/.../InvCaptive.java` | 원작 `InvCaptive.kt` | Kotlin → Java, Paper 26.3 내부 인벤토리 구조에 맞게 이식 |
+| `inv-captive/src/.../InvCaptivePlugin.java` | 원작 `InvCaptivePlugin.kt` | Kotlin → Java, `list` / `status` 명령 추가, 퇴장 시 저장 |
+| `inv-captive/src/main/resources/plugin.yml` | 원작 `plugin.yml` | 의존성 제거, 권한 추가 |
+| `server.ps1` | 원작 `server.ps1` | Paper 26.3 다운로드 방식, 플러그인 빌드/다운로드, 각종 수정 |
+| `inv-captive/build.ps1`, `inv-captive/reset.bat`, `server.bat`, `.github/` | 새로 작성 | - |
+
 ## 라이선스
 
 GPL-3.0 - 원작의 라이선스를 따릅니다. [LICENSE.md](LICENSE.md)

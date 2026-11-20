@@ -1,3 +1,21 @@
+/*
+ * InvCaptive for Paper 26.3
+ *
+ * Original work: InvCaptive 0.2.0 (InvCaptive.kt) by Noonmaru
+ *   https://github.com/monun/inv-captive - GPL-3.0
+ *
+ * Modified 2026-11-20 by kaneteulin:
+ *   - Rewritten from Kotlin to Java
+ *   - Ported to Paper 26.3 server internals: shares Inventory.items and EntityEquipment.items
+ *     (armor/off-hand moved to EntityEquipment in 1.21.5) instead of the 1.16 inventory lists
+ *   - Save format adapted to current item serialization, isLocked() added
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation, version 3.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License (LICENSE.md) for more details.
+ */
 package com.github.monun.invcaptive.plugin;
 
 import net.kyori.adventure.text.Component;

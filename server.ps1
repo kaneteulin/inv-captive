@@ -1,4 +1,20 @@
-﻿# InvCaptive 설치 (서버 시작/재시작 때마다)
+﻿# Paper 서버 실행 스크립트 (InvCaptive for Paper 26.3)
+#
+# Original work: server.ps1 from InvCaptive 0.2.0 by Noonmaru
+#   https://github.com/monun/inv-captive - GPL-3.0
+#
+# Modified 2026-11-20 by kaneteulin:
+#   - PaperMC Fill v3 API로 Paper 다운로드 (SHA-256 검증), Java 버전 확인, 권장 JVM 플래그
+#   - InvCaptive 직접 빌드 / GitHub Releases 다운로드, reset.bat 설치
+#   - TLS 1.2, 백업 예외 목록, 재시작 선택 대기 등 수정
+#
+# This program is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, version 3.
+# This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU General Public License (LICENSE.md) for more details.
+
+# InvCaptive 설치 (서버 시작/재시작 때마다)
 #  - 이 스크립트 옆에 inv-captive 폴더(소스)가 있으면: 직접 빌드해서 설치 (개발용, JDK 필요)
 #  - 없으면: GitHub Releases 에서 최신 InvCaptive.jar, reset.bat 다운로드
 $Build = $true

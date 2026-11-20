@@ -1,4 +1,7 @@
 @echo off
+rem InvCaptive for Paper 26.3 - 월드/시드 초기화 스크립트
+rem 2026-11-20 kaneteulin 작성. Noonmaru 의 InvCaptive (https://github.com/monun/inv-captive) 수정본의 일부이며
+rem GNU GPL 버전 3 으로 배포됩니다. LICENSE.md 참고.
 setlocal EnableExtensions
 rem 이 파일은 plugins\InvCaptive 안에 있으므로 두 단계 위가 서버 폴더
 cd /d "%~dp0..\.."

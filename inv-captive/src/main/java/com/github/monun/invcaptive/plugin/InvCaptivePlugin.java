@@ -1,3 +1,21 @@
+/*
+ * InvCaptive for Paper 26.3
+ *
+ * Original work: InvCaptive 0.2.0 (InvCaptivePlugin.kt) by Noonmaru
+ *   https://github.com/monun/inv-captive - GPL-3.0
+ *
+ * Modified 2026-11-20 by kaneteulin:
+ *   - Rewritten from Kotlin to Java for Paper 26.3 (Kotlin / ProtocolLib dependencies removed)
+ *   - Legacy materials excluded from the unlock block pool
+ *   - Inventory is actually saved to inventory.yml when a player quits
+ *   - Added /invcaptive list and /invcaptive status commands
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation, version 3.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License (LICENSE.md) for more details.
+ */
 package com.github.monun.invcaptive.plugin;
 
 import net.kyori.adventure.text.Component;
@@ -44,7 +62,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 
 /**
- * 원작: Noonmaru (monun/inv-captive 0.2.0, 1.16.5)
+ * @author Noonmaru (original), kaneteulin (Paper 26.3 port)
  */
 public final class InvCaptivePlugin extends JavaPlugin implements Listener {
 

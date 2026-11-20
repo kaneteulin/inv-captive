@@ -1,3 +1,7 @@
+# InvCaptive for Paper 26.3 - build script
+# Written 2026-11-20 by kaneteulin. Part of a modified version of InvCaptive by Noonmaru
+# (https://github.com/monun/inv-captive). Licensed under the GNU GPL version 3, see LICENSE.md.
+#
 # Builds InvCaptive.jar against the local Paper server (NMS included).
 # Usage: build.ps1 [-ServerDir <path to .server>] [-Output <jar path>]
 Param(
