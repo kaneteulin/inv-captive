@@ -41,6 +41,11 @@ $Plugins = @(
 # Backup
 $AskBackup = $false
 
+# Restart
+# - stop 으로 정상 종료한 경우: 묻지 않고 완전히 종료
+# - 크래시 등 비정상 종료한 경우: 다시 시작할지 묻고, 아래 시간(초) 동안 입력이 없으면 자동으로 다시 시작
+$RestartTimeout = 10
+
 # PowerShell 5.1은 기본적으로 TLS 1.2를 쓰지 않아 GitHub/PaperMC 다운로드가 실패할 수 있음
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -386,6 +391,7 @@ While ($true)
     }
 
     java $JVMArgs
+    $ExitCode = $LASTEXITCODE
 
     if ($AskBackup)
     {
@@ -397,7 +403,17 @@ While ($true)
         }
     }
 
-    $Restart = Choice "Restart? [Y]es [N]o" "YN" 'Y' 2
+    Write-Host ""
+    if ($ExitCode -eq 0)
+    {
+        # stop 으로 정상 종료 -> 묻지 않고 완전히 종료
+        Write-Host "서버가 종료되었습니다."
+        $Restart = 'N'
+    }
+    else
+    {
+        $Restart = Choice "서버가 비정상 종료되었습니다 (종료 코드 $ExitCode). 다시 시작할까요? [Y]es [N]o  ($RestartTimeout초 후 자동으로 Y)" "YN" 'Y' $RestartTimeout
+    }
 
     if ($Restart -eq 'N')
     {
