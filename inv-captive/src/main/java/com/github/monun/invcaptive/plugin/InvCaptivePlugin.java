@@ -37,12 +37,16 @@ import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.world.WorldSaveEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -224,6 +228,32 @@ public final class InvCaptivePlugin extends JavaPlugin implements Listener {
         if (item != null && item.getType() == Material.BARRIER) {
             event.setCancelled(true);
         }
+    }
+
+    // 아이템 액자, 갑옷 거치대, 알레이 등 엔티티에 방벽을 넣는 것 차단 (원본에 없던 빈틈)
+    @EventHandler
+    public void onInteractEntity(PlayerInteractEntityEvent event) {
+        if (isBarrierInHand(event.getPlayer(), event.getHand())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onInteractAtEntity(PlayerInteractAtEntityEvent event) {
+        if (isBarrierInHand(event.getPlayer(), event.getHand())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onArmorStandManipulate(PlayerArmorStandManipulateEvent event) {
+        if (event.getPlayerItem().getType() == Material.BARRIER) {
+            event.setCancelled(true);
+        }
+    }
+
+    private static boolean isBarrierInHand(Player player, EquipmentSlot hand) {
+        return player.getInventory().getItem(hand).getType() == Material.BARRIER;
     }
 
     @EventHandler
