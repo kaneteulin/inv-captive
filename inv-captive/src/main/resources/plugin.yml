@@ -1,3 +1,5 @@
+# Original: InvCaptive 0.2.0 by Noonmaru (https://github.com/monun/inv-captive), GPL-3.0
+# Modified 2026-11-20 by kaneteulin. Licensed under the GNU GPL version 3, see LICENSE.md.
 name: InvCaptive
 main: com.github.monun.invcaptive.plugin.InvCaptivePlugin
 api-version: '26.3'
